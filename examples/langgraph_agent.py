@@ -1,13 +1,13 @@
-"""Use Engram as the governed memory behind a LangGraph agent.
+"""Use Memwarden as the governed memory behind a LangGraph agent.
 
-Engram sits between the graph's memory node and the store. Reads return only
+Memwarden sits between the graph's memory node and the store. Reads return only
 post-gate records (quarantine → TTL → integrity → trust), so poisoned or
 unverified content never enters the graph state. Requires a LangGraph install
-and, for the backend shown, `pip install engram[agentcore]`.
+and, for the backend shown, `pip install memwarden[agentcore]`.
 """
 
-from engram import GovernedMemory, Policy
-from engram.backends.inmemory import InMemoryBackend  # swap for AgentCoreBackend/RedisBackend
+from memwarden import GovernedMemory, Policy
+from memwarden.backends.inmemory import InMemoryBackend  # swap for AgentCoreBackend/RedisBackend
 
 memory = GovernedMemory(backend=InMemoryBackend(), tenant_id="acme",
                         policy=Policy.load("policies/policy.yaml"))

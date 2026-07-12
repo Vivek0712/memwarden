@@ -1,4 +1,4 @@
-# Engram reference policy (paper Listing 2 + design §13).
+# Memwarden reference policy (paper Listing 2 + design §13).
 version: "1.0.0"
 
 retention_classes:

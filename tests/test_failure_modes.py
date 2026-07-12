@@ -8,13 +8,13 @@ import json
 
 import pytest
 
-from engram.audit import AuditChain
-from engram.envelope import sha256_hex
-from engram.errors import SidecarUnavailable, TenantViolation, WriteRejected
-from engram.governed import GovernedMemory
-from engram.l2.scanner import RecordEvent, StubGuardrail, handle_record_event
-from engram.metrics import registry
-from engram.sweep import sweep_tenant
+from memwarden.audit import AuditChain
+from memwarden.envelope import sha256_hex
+from memwarden.errors import SidecarUnavailable, TenantViolation, WriteRejected
+from memwarden.governed import GovernedMemory
+from memwarden.l2.scanner import RecordEvent, StubGuardrail, handle_record_event
+from memwarden.metrics import registry
+from memwarden.sweep import sweep_tenant
 
 from conftest import NS
 
@@ -49,7 +49,7 @@ def test_integrity_mismatch_detected(memory, backend):
     rid = memory.write(BENIGN, NS, "user_turn", "alice")
     backend._records[NS][rid].content = BENIGN + " (tampered out of band)"
     assert memory.retrieve(NS, "quarterly report") == []
-    assert registry.get("engram.read.dropped_by_gate", gate="integrity") >= 1
+    assert registry.get("memwarden.read.dropped_by_gate", gate="integrity") >= 1
 
 
 # 3. FM2: cross-tenant write rejection --------------------------------------------
@@ -83,7 +83,7 @@ def test_medium_confidence_quarantine_filtered(memory, backend):
     rid = memory.write(QUARANTINE_PAYLOAD, NS, "user_turn", "alice")
     assert backend.get(NS, rid) is not None              # persists...
     assert memory.retrieve(NS, "AcmeVPN best choice") == []   # ...but invisible
-    assert registry.get("engram.read.dropped_by_gate", gate="quarantine") >= 1
+    assert registry.get("memwarden.read.dropped_by_gate", gate="quarantine") >= 1
 
 
 # 7. FM3: invisible-Unicode payload blocked -----------------------------------------
@@ -174,7 +174,7 @@ def test_untrusted_gated_until_clearance(memory):
     rid = memory.write(content, NS, "web_fetch", "alice")
     # Zero L1 flags, but untrusted provenance without clearance is inadmissible.
     assert memory.retrieve(NS, "vendor rate limit") == []
-    assert registry.get("engram.read.dropped_by_gate", gate="trust_gate") >= 1
+    assert registry.get("memwarden.read.dropped_by_gate", gate="trust_gate") >= 1
     _l2_clear(memory, rid, content)
     assert len(memory.retrieve(NS, "vendor rate limit")) == 1
 
@@ -183,7 +183,7 @@ def test_untrusted_gated_until_clearance(memory):
 def test_envelope_miss_fails_closed(memory, backend):
     backend.put(NS, "record written around the governance layer", {"actor_id": "eve"})
     assert memory.retrieve(NS, "record governance layer") == []
-    assert registry.get("engram.read.dropped_by_gate", gate="envelope_miss") >= 1
+    assert registry.get("memwarden.read.dropped_by_gate", gate="envelope_miss") >= 1
 
 
 # 14b. sidecar outage: degraded mode ---------------------------------------------------------
@@ -212,10 +212,10 @@ def test_sidecar_outage_degraded_mode(backend, sidecar, policy, clock):
     _l2_clear(memory, rid_web, "scraped page content")
     assert len(memory.retrieve(NS, "offsite venue scraped page")) == 2
 
-    before = registry.get("engram.read.degraded")
+    before = registry.get("memwarden.read.degraded")
     outage.down = True
     recs = memory.retrieve(NS, "offsite venue scraped page")
     # FIRST_PARTY with a locally cached envelope stays admissible; the cleared
     # untrusted record is dropped: degraded means delayed, never admitted.
     assert [r.content for r in recs] == ["alice booked the offsite venue"]
-    assert registry.get("engram.read.degraded") > before
+    assert registry.get("memwarden.read.degraded") > before

@@ -37,5 +37,5 @@ def sweep_tenant(backend, sidecar, tenant_id: str, now: float | None = None) -> 
         for rid in rids:
             sidecar.delete_envelope(tenant_id, rid)
             sidecar.delete_verdict(tenant_id, rid)
-    registry.incr("engram.sweep.deleted", deleted)
+    registry.incr("memwarden.sweep.deleted", deleted)
     return SweepResult(deleted=deleted, holds_skipped=holds)

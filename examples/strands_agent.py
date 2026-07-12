@@ -1,14 +1,14 @@
-"""Wrap AgentCore Memory with Engram for a Strands agent.
+"""Wrap AgentCore Memory with Memwarden for a Strands agent.
 
 The integration is one construction line: the agent keeps calling the same
-memory surface; Engram governs every write and read underneath. Requires
-`pip install engram[agentcore]` and a Strands install.
+memory surface; Memwarden governs every write and read underneath. Requires
+`pip install memwarden[agentcore]` and a Strands install.
 
     python examples/strands_agent.py
 """
 
-from engram import GovernedMemory, Policy
-from engram.backends.agentcore import AgentCoreBackend
+from memwarden import GovernedMemory, Policy
+from memwarden.backends.agentcore import AgentCoreBackend
 
 MEMORY_ID = "your-agentcore-memory-id"
 TENANT = "acme"
@@ -39,7 +39,7 @@ def recall(query: str, actor_id: str):
 # agent = Agent(tools=[memory_tool], ...)
 #
 # The agent's tool surface is unchanged; provenance, retention, poisoning
-# defense, and Article 17 erasure are enforced by Engram, not the agent.
+# defense, and Article 17 erasure are enforced by Memwarden, not the agent.
 
 if __name__ == "__main__":
     remember("customer prefers email over phone", "user_turn", "u1")

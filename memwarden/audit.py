@@ -70,7 +70,7 @@ class AuditChain:
     def head(self) -> str:
         return self._entries[-1].entry_hash if self._entries else GENESIS
 
-    # -- verification (engram-verify replays this) --------------------------
+    # -- verification (memwarden-verify replays this) --------------------------
     @staticmethod
     def verify(entries: Iterable[AuditEntry]) -> tuple[bool, Optional[int]]:
         """Replay the chain; returns (ok, first_bad_seq)."""

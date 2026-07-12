@@ -1,6 +1,6 @@
 # Security Policy
 
-Engram is a security component. We take vulnerabilities seriously.
+Memwarden is a security component. We take vulnerabilities seriously.
 
 ## Reporting
 
@@ -21,4 +21,4 @@ Report a *bypass of the trust gate*, not a missed detection.
 
 ## Supported versions
 
-The latest minor release receives security fixes. Pin `engram>=x.y,<x.(y+1)`.
+The latest minor release receives security fixes. Pin `memwarden>=x.y,<x.(y+1)`.

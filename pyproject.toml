@@ -1,5 +1,5 @@
 [project]
-name = "engram"
+name = "memwarden"
 version = "0.1.0"
 description = "A governance layer for agentic memory: tenant isolation, per-category retention, provenance-based trust, and layered poisoning defense for AI agent memory stores."
 readme = "README.md"
@@ -26,22 +26,20 @@ aws = ["boto3>=1.34"]              # DynamoDB sidecar + S3 anchoring (self-host)
 dev = ["pytest>=8", "boto3>=1.34"]
 all = ["boto3>=1.34", "redis>=5", "psycopg[binary]>=3", "pgvector>=0.2"]
 
-# TODO(naming): the PyPI name "engram" is already taken. Before first publish,
-# pick an available distribution name (e.g. "engram-ai" or "engramctl") and a
-# matching GitHub handle/domain. See docs/PRODUCT_DELIVERY.md "Naming & domains".
 [project.urls]
-Source = "https://github.com/OWNER/engram"        # replace OWNER with your GitHub handle/org
+Homepage = "https://memwarden.ai"                    # domain available; register when ready
+Source = "https://github.com/OWNER/memwarden"        # replace OWNER with your GitHub handle/org
 
 [project.scripts]
-engram-verify = "engram.verify_cli:main"
+memwarden-verify = "memwarden.verify_cli:main"
 
 [build-system]
 requires = ["setuptools>=64"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["engram", "engram.detect", "engram.backends", "engram.sidecar",
-            "engram.l2", "memctl", "memctl.detect"]
+packages = ["memwarden", "memwarden.detect", "memwarden.backends", "memwarden.sidecar",
+            "memwarden.l2"]
 
 [tool.setuptools.package-data]
-engram = ["py.typed"]
+memwarden = ["py.typed"]

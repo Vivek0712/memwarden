@@ -5,10 +5,10 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from engram.backends.inmemory import InMemoryBackend
-from engram.governed import GovernedMemory
-from engram.policy import Policy
-from engram.sidecar.local import LocalSidecar
+from memwarden.backends.inmemory import InMemoryBackend
+from memwarden.governed import GovernedMemory
+from memwarden.policy import Policy
+from memwarden.sidecar.local import LocalSidecar
 
 POLICY_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                            "policies", "policy.yaml")

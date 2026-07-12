@@ -1,4 +1,4 @@
-"""engram-verify: auditor CLI (design §10).
+"""memwarden-verify: auditor CLI (design §10).
 
 Replays a tenant chain, checks every prev_hash, and validates the latest anchor.
 Runnable with read-only credentials. Works against the local sidecar (library
@@ -31,9 +31,9 @@ def verify_tenant(sidecar, tenant_id: str, anchors: list[dict] | None = None) ->
 
 
 def main(argv=None) -> int:
-    p = argparse.ArgumentParser(prog="engram-verify")
+    p = argparse.ArgumentParser(prog="memwarden-verify")
     p.add_argument("--tenant", required=True)
-    p.add_argument("--table-prefix", default="engram",
+    p.add_argument("--table-prefix", default="memwarden",
                    help="DynamoDB table prefix (live mode)")
     p.add_argument("--bucket", help="S3 anchor bucket (live mode)")
     p.add_argument("--profile", default=None)

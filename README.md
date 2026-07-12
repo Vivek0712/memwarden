@@ -1,6 +1,6 @@
 <div align="center">
 
-# Engram
+# Memwarden
 
 **A governance layer for agentic memory.**
 
@@ -10,13 +10,13 @@ Tenant isolation · per-category retention · provenance-based trust · layered 
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue)]()
 [![Tests](https://img.shields.io/badge/tests-passing-brightgreen)]()
 
-[Quickstart](#quickstart) · [Why](#why-engram) · [How it works](#how-it-works) · [Adapters](#backends) · [Managed cloud](#self-host-vs-engram-cloud) · [Paper](#paper)
+[Quickstart](#quickstart) · [Why](#why-memwarden) · [How it works](#how-it-works) · [Adapters](#backends) · [Managed cloud](#self-host-vs-memwarden-cloud) · [Paper](#paper)
 
 </div>
 
 ---
 
-## Why Engram
+## Why Memwarden
 
 Persistent memory is what makes agents useful across sessions — and a durable attack surface. Content written once can steer every future decision that retrieves it, weeks after the write. In a 60-day window Microsoft documented 50 distinct memory-manipulation attempts across 31 companies; OWASP made **Memory & Context Poisoning (ASI06)** a Top-10 agentic risk in Dec 2025; Unit 42 demonstrated it live against Amazon Bedrock Agent memory.
 
@@ -26,7 +26,7 @@ Managed memory services concentrate this surface and leave three gaps that only 
 2. **Stale, unverifiable records** — model-driven extraction writes records no application authored, and nothing revalidates them.
 3. **Retention beyond lawful limits** — a single resource-level expiry can't express per-category retention or prove GDPR Article 17 erasure.
 
-Engram closes them at the seam between your agent and its store, **without changing your agent code** — you change one construction line.
+Memwarden closes them at the seam between your agent and its store, **without changing your agent code** — you change one construction line.
 
 ```diff
 - memory = AgentCoreMemory(memory_id=..., region=...)
@@ -39,13 +39,13 @@ Every operation your agent already performs keeps its shape. Governance adds **~
 ## Quickstart
 
 ```bash
-pip install engram                 # core (in-memory + local sidecar)
-pip install "engram[agentcore]"    # + Amazon Bedrock AgentCore adapter
+pip install memwarden                 # core (in-memory + local sidecar)
+pip install "memwarden[agentcore]"    # + Amazon Bedrock AgentCore adapter
 ```
 
 ```python
-from engram import GovernedMemory, Policy, WriteRejected
-from engram.backends.inmemory import InMemoryBackend
+from memwarden import GovernedMemory, Policy, WriteRejected
+from memwarden.backends.inmemory import InMemoryBackend
 
 memory = GovernedMemory(
     backend=InMemoryBackend(),
@@ -76,7 +76,7 @@ See [`examples/`](examples/) for Strands, LangGraph, and raw-agent integrations.
 
 ## How it works
 
-Engram splits a **deterministic inline path** from an **out-of-band classifier path**. Nothing that calls a model runs on the agent's request.
+Memwarden splits a **deterministic inline path** from an **out-of-band classifier path**. Nothing that calls a model runs on the agent's request.
 
 ```
                  ┌──────────────────── inline, deterministic (~0.02 ms) ─────────────────────┐
@@ -95,27 +95,27 @@ Engram splits a **deterministic inline path** from an **out-of-band classifier p
 
 ## Backends
 
-Engram governs at a **seven-operation protocol**, so the same guarantees apply to any store.
+Memwarden governs at a **seven-operation protocol**, so the same guarantees apply to any store.
 
 | Backend | Package extra | Status |
 |---|---|---|
 | In-memory (reference / testing) | — | ✅ stable |
-| Amazon Bedrock AgentCore Memory | `engram[agentcore]` | ✅ stable |
-| Redis | `engram[redis]` | 🧪 beta |
-| pgvector (Postgres) | `engram[pgvector]` | 🧪 beta |
+| Amazon Bedrock AgentCore Memory | `memwarden[agentcore]` | ✅ stable |
+| Redis | `memwarden[redis]` | 🧪 beta |
+| pgvector (Postgres) | `memwarden[pgvector]` | 🧪 beta |
 | Mem0, Letta | — | 🔜 roadmap |
 
-Write your own by implementing `engram.backends.base.MemoryBackend` (seven methods) and passing the conformance suite. Adapters own transport only — no policy, detection, audit, or erasure logic lives in an adapter.
+Write your own by implementing `memwarden.backends.base.MemoryBackend` (seven methods) and passing the conformance suite. Adapters own transport only — no policy, detection, audit, or erasure logic lives in an adapter.
 
-## Self-host vs. Engram Cloud
+## Self-host vs. Memwarden Cloud
 
 The library is fully self-hostable: run governance in-process, keep the sidecar on your own DynamoDB, and run L2 against your own Bedrock Guardrail. Everything in this repo is Apache-2.0.
 
-**Engram Cloud** is the managed control plane for teams that don't want to operate the out-of-band pipeline: a hosted multi-tenant sidecar, the AgentCore record-stream → Guardrails consumer, cross-tenant Merkle anchoring to S3 Object Lock, a compliance dashboard, IAM/SCP automation, and SOC 2 / SLA-backed operations. _(Private beta — contact below.)_
+**Memwarden Cloud** is the managed control plane for teams that don't want to operate the out-of-band pipeline: a hosted multi-tenant sidecar, the AgentCore record-stream → Guardrails consumer, cross-tenant Merkle anchoring to S3 Object Lock, a compliance dashboard, IAM/SCP automation, and SOC 2 / SLA-backed operations. _(Private beta — contact below.)_
 
 ## Paper
 
-Engram is described in *"Engram: A Governance Layer for Agentic Memory: Provenance, Retention, and Poisoning Defense over Amazon Bedrock AgentCore Memory."* The reference numbers (held-out adversarial recall, layered coverage, latency, and the live AgentCore validation) are reproducible from this repo:
+Memwarden is described in *"Memwarden: A Governance Layer for Agentic Memory: Provenance, Retention, and Poisoning Defense over Amazon Bedrock AgentCore Memory."* The reference numbers (held-out adversarial recall, layered coverage, latency, and the live AgentCore validation) are reproducible from this repo:
 
 ```bash
 python eval/heldout_eval.py     # held-out adversarial recall (Wilson intervals)

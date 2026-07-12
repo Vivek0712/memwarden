@@ -3,8 +3,8 @@
     python examples/raw_quickstart.py
 """
 
-from engram import GovernedMemory, Policy, WriteRejected
-from engram.backends.inmemory import InMemoryBackend
+from memwarden import GovernedMemory, Policy, WriteRejected
+from memwarden.backends.inmemory import InMemoryBackend
 
 policy = Policy.load("policies/policy.yaml")
 memory = GovernedMemory(backend=InMemoryBackend(), tenant_id="acme", policy=policy)

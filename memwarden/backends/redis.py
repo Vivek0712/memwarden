@@ -4,7 +4,7 @@ Transport only, per the protocol contract. Records live in Redis hashes keyed by
 namespace+id; an actor secondary index supports the erasure walk. Retrieval is a
 keyword scan over the namespace (non-semantic) — adequate for exact/keyword
 recall and for the conformance suite; pair with RediSearch/vector for semantic
-ranking in production. Requires `pip install engram[redis]`.
+ranking in production. Requires `pip install memwarden[redis]`.
 """
 
 from __future__ import annotations
@@ -18,7 +18,7 @@ from .base import Page, Record
 
 class RedisBackend:
     def __init__(self, url: str = "redis://localhost:6379/0", client=None,
-                 key_prefix: str = "engram"):
+                 key_prefix: str = "memwarden"):
         if client is None:
             import redis  # lazy: only needed if this adapter is used
             client = redis.Redis.from_url(url, decode_responses=True)

@@ -1,4 +1,4 @@
-"""Minimal metrics registry (design §15). Namespace `engram`."""
+"""Minimal metrics registry (design §15). Namespace `memwarden`."""
 
 from __future__ import annotations
 

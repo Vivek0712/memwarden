@@ -8,7 +8,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from bench.corpus import ATTACKS, BENIGN
-from engram.detect import rules
+from memwarden.detect import rules
 
 
 def confusion(threshold: float = 0.5):

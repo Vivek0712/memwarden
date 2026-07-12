@@ -1,12 +1,12 @@
-# Contributing to Engram
+# Contributing to Memwarden
 
-Thanks for helping govern agent memory. This repo is the **open-source Engram SDK**
-(Apache-2.0). The managed control plane (Engram Cloud) is developed separately.
+Thanks for helping govern agent memory. This repo is the **open-source Memwarden SDK**
+(Apache-2.0). The managed control plane (Memwarden Cloud) is developed separately.
 
 ## Scope of this repo
 
 In scope: the seven-operation backend protocol, the `GovernedMemory` interceptor,
-the L1 detector, the policy engine, envelopes, the audit chain and `engram-verify`,
+the L1 detector, the policy engine, envelopes, the audit chain and `memwarden-verify`,
 the verdict-stream cache, backend adapters, and the self-host sidecar. Out of
 scope here: the hosted multi-tenant control plane, dashboards, and IaC.
 
@@ -33,7 +33,7 @@ python eval/heldout_eval.py
 
 ## Adding a backend adapter
 
-Implement `engram.backends.base.MemoryBackend` (seven methods), add it to the
+Implement `memwarden.backends.base.MemoryBackend` (seven methods), add it to the
 conformance suite parametrization, and document its batch limits and consistency
 model. Open a PR with the conformance run in the description.
 

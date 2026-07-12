@@ -21,7 +21,7 @@ def canonical(body: dict) -> bytes:
 class Signer:
     def __init__(self, key: bytes | None = None):
         if key is None:
-            key = os.environ.get(_DEFAULT_KEY_ENV, "engram-dev-signing-key").encode()
+            key = os.environ.get(_DEFAULT_KEY_ENV, "memwarden-dev-signing-key").encode()
         self._key = key
 
     def sign(self, body: dict) -> str:

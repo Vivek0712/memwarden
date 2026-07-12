@@ -4,7 +4,7 @@ the AgentCore adapter runs the same suite live via aws/live_validation.py."""
 
 import pytest
 
-from engram.backends.inmemory import InMemoryBackend
+from memwarden.backends.inmemory import InMemoryBackend
 
 NS = "tenants/acme/conformance"
 

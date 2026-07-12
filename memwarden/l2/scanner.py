@@ -99,7 +99,7 @@ def handle_record_event(event: RecordEvent, sidecar, policy: Policy,
     if oracle is not None:
         # Verdict stream feeds the read-path cache (design §8.4).
         oracle.publish(event.record_id, v)
-    registry.incr("engram.l2.verdicts", verdict=verdict)
+    registry.incr("memwarden.l2.verdicts", verdict=verdict)
     return verdict
 
 

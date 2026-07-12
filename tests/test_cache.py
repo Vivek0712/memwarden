@@ -7,11 +7,11 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from engram.backends.inmemory import InMemoryBackend
-from engram.cache import BloomFilter, QuarantineOracle
-from engram.governed import GovernedMemory
-from engram.l2.scanner import RecordEvent, StubGuardrail, handle_record_event
-from engram.policy import Policy
+from memwarden.backends.inmemory import InMemoryBackend
+from memwarden.cache import BloomFilter, QuarantineOracle
+from memwarden.governed import GovernedMemory
+from memwarden.l2.scanner import RecordEvent, StubGuardrail, handle_record_event
+from memwarden.policy import Policy
 
 from conftest import NS, POLICY_PATH
 

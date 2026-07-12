@@ -1,6 +1,6 @@
 import sys, os, time, math
 sys.path.insert(0, ".")
-from memctl.detect import rules
+from memwarden.detect import rules
 
 # ---------- Held-out adversarial corpus ----------
 # Distinct from the in-distribution corpus: paraphrases that avoid the exact

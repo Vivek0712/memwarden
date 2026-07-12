@@ -3,7 +3,7 @@
 The seven-operation surface is defined here against a `records` table with a
 `vector` column; `retrieve` is a cosine-distance nearest-neighbor query. Wiring
 to an embedding function is deployment-specific, so `_embed` is left as the one
-integration point. Requires `pip install engram[pgvector]`.
+integration point. Requires `pip install memwarden[pgvector]`.
 
 This adapter is a documented stub: the method bodies show the intended SQL and
 raise NotImplementedError where the embedding hook must be supplied. It passes
@@ -20,7 +20,7 @@ from .base import Page, Record
 
 class PgVectorBackend:
     def __init__(self, dsn: str, embed: Optional[Callable[[str], list[float]]] = None,
-                 table: str = "engram_records", conn=None):
+                 table: str = "memwarden_records", conn=None):
         self.dsn = dsn
         self.table = table
         self._embed_fn = embed

@@ -29,13 +29,13 @@ sys.path.insert(0, ROOT)
 sys.path.insert(0, HERE)
 
 from bench.corpus import ATTACKS, BENIGN
-from engram.backends.inmemory import InMemoryBackend
-from engram.cache import QuarantineOracle
-from engram.detect import rules
-from engram.errors import WriteRejected
-from engram.governed import GovernedMemory
-from engram.l2.scanner import RecordEvent, handle_record_event
-from engram.policy import Policy
+from memwarden.backends.inmemory import InMemoryBackend
+from memwarden.cache import QuarantineOracle
+from memwarden.detect import rules
+from memwarden.errors import WriteRejected
+from memwarden.governed import GovernedMemory
+from memwarden.l2.scanner import RecordEvent, handle_record_event
+from memwarden.policy import Policy
 
 import heldout_eval as he
 
@@ -266,7 +266,7 @@ def e4_cache_hop_elimination(n_reads=20000, quarantine_fraction=0.05, seed=11):
     quarantine-sparse, negative-heavy workload (design §6.1 assumption)."""
     rng = random.Random(seed)
     oracle = QuarantineOracle(capacity=n_reads, error_rate=0.01)
-    from engram.sidecar.base import CLEARED, Verdict
+    from memwarden.sidecar.base import CLEARED, Verdict
     # Populate the verdict stream: a small set of cleared untrusted records.
     n_cleared = int(n_reads * quarantine_fraction)
     cleared_ids = [f"mem-{i:040d}" for i in range(n_cleared)]

@@ -15,8 +15,8 @@ import pytest
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "eval"))
 
-from engram.detect import rules
-from engram.errors import WriteRejected
+from memwarden.detect import rules
+from memwarden.errors import WriteRejected
 
 from conftest import NS
 

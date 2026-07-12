@@ -50,7 +50,7 @@ def _day_bucket(epoch: float) -> str:
 
 class DynamoSidecar:
     def __init__(self, session=None, region: str = "us-east-1",
-                 table_prefix: str = "engram"):
+                 table_prefix: str = "memwarden"):
         import boto3
         session = session or boto3.Session(region_name=region)
         ddb = session.resource("dynamodb")
@@ -209,7 +209,7 @@ class DynamoSidecar:
                 if e.response["Error"]["Code"] != "ConditionalCheckFailedException":
                     raise
                 from ..metrics import registry
-                registry.incr("engram.audit.append_retries")   # design §15
+                registry.incr("memwarden.audit.append_retries")   # design §15
                 self._head_cache[tenant_id] = self._read_head(tenant_id)  # retry
         raise SidecarUnavailable("audit append contention budget exhausted")
 

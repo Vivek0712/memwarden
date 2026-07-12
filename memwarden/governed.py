@@ -79,7 +79,7 @@ class GovernedMemory:
                 self.tenant_id, "WRITE_REJECTED", record_id="", actor_id=actor_id,
                 detail={"l1_score": round(result.score, 3), "families": result.families,
                         "namespace": namespace})
-            registry.incr("engram.write.rejected")
+            registry.incr("memwarden.write.rejected")
             raise WriteRejected(result.score, result.families)
         quarantined = result.score >= QUARANTINE_THRESHOLD
 
@@ -114,7 +114,7 @@ class GovernedMemory:
             self.sidecar.put_verdict(self.tenant_id, rid, v)
             if self.oracle is not None:
                 self.oracle.publish(rid, v)
-            registry.incr("engram.write.quarantined")
+            registry.incr("memwarden.write.quarantined")
         self._env_cache[rid] = env
         return rid
 
@@ -124,7 +124,7 @@ class GovernedMemory:
         # never sees ungoverned data, and the attempt is audited (design §14.2
         # "empty cross-tenant read").
         if not namespace.startswith(self._tenant_prefix()):
-            registry.incr("engram.read.dropped_by_gate", gate="tenant_scope")
+            registry.incr("memwarden.read.dropped_by_gate", gate="tenant_scope")
             self.sidecar.audit_append(self.tenant_id, "READ_DROP",
                                       detail={"gate": "tenant_scope", "namespace": namespace})
             return []
@@ -140,7 +140,7 @@ class GovernedMemory:
         return admitted
 
     def _drop(self, rec: Record, gate: str) -> bool:
-        registry.incr("engram.read.dropped_by_gate", gate=gate)
+        registry.incr("memwarden.read.dropped_by_gate", gate=gate)
         self.sidecar.audit_append(self.tenant_id, "READ_DROP", record_id=rec.record_id,
                                   detail={"gate": gate})
         return False
@@ -173,7 +173,7 @@ class GovernedMemory:
         except SidecarUnavailable:
             # Degraded mode: drop untrusted tiers, admit SYSTEM/FIRST_PARTY whose
             # envelopes are locally cached (design §7).
-            registry.incr("engram.read.degraded")
+            registry.incr("memwarden.read.degraded")
             cached = self._env_cache.get(rec.record_id)
             if cached is None or cached.trust_tier < TrustTier.FIRST_PARTY:
                 return self._drop(rec, "degraded")
@@ -210,7 +210,7 @@ class GovernedMemory:
                 if self._cleared(rec, env) is not True:
                     return self._drop(rec, "trust_gate")
         except SidecarUnavailable:
-            registry.incr("engram.read.degraded")
+            registry.incr("memwarden.read.degraded")
             if env.trust_tier >= TrustTier.FIRST_PARTY and not env.expired(now) \
                     and env.verify_integrity(rec.content) and not env.quarantined:
                 return True
@@ -260,7 +260,7 @@ class GovernedMemory:
         cert = dict(cert_body)
         cert["signature"] = self.signer.sign(cert_body)
         self.sidecar.put_certificate(self.tenant_id, cert)
-        registry.incr("engram.erasure.certificates")
+        registry.incr("memwarden.erasure.certificates")
         return ErasureResult(records_deleted, events_deleted, len(held), cert,
                              conflicts=held)
 

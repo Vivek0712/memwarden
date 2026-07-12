@@ -1,11 +1,11 @@
-"""Engram error taxonomy (design doc §5.2)."""
+"""Memwarden error taxonomy (design doc §5.2)."""
 
 
-class EngramError(Exception):
+class MemwardenError(Exception):
     pass
 
 
-class WriteRejected(EngramError):
+class WriteRejected(MemwardenError):
     """L1 score >= reject threshold; nothing persisted."""
 
     def __init__(self, l1_score: float, families: list[str]):
@@ -14,17 +14,17 @@ class WriteRejected(EngramError):
         super().__init__(f"write rejected: l1_score={l1_score:.2f} families={families}")
 
 
-class TenantViolation(EngramError):
+class TenantViolation(MemwardenError):
     pass
 
 
-class PolicyError(EngramError):
+class PolicyError(MemwardenError):
     pass
 
 
-class BackendUnavailable(EngramError):
+class BackendUnavailable(MemwardenError):
     """Fails closed on read; fails the write on write."""
 
 
-class SidecarUnavailable(EngramError):
+class SidecarUnavailable(MemwardenError):
     """Fails closed on read; fails the write on write."""
