@@ -11,7 +11,7 @@ import hmac
 import json
 import os
 
-_DEFAULT_KEY_ENV = "ENGRAM_SIGNING_KEY"
+_DEFAULT_KEY_ENV = "MEMWARDEN_SIGNING_KEY"
 
 
 def canonical(body: dict) -> bytes:
