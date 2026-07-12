@@ -1,0 +1,25 @@
+# Engram reference policy (paper Listing 2 + design §13).
+version: "1.0.0"
+
+retention_classes:
+  standard-90d:  { ttl_days: 90 }
+  pii-30d:       { ttl_days: 30 }
+  ephemeral-24h: { ttl_days: 1 }
+  regulatory-7y: { ttl_days: 2555, legal_hold_eligible: true }
+
+retention_rules:
+  - { match: "web_fetch:*",   class: ephemeral-24h }
+  - { match: "*:*/pii/*",     class: pii-30d }
+  - { match: "*:*/finance/*", class: regulatory-7y }
+  - { match: "*:*",           class: standard-90d }
+
+read_admission:
+  # Design doc §7 (build contract): UNTRUSTED *and* DERIVED need a CLEARED
+  # verdict before admission (paper Listing 2 shipped 1; see notes N2).
+  min_trust_tier_without_deep_scan: 2
+  drop_quarantined: true
+  verify_integrity: true
+
+l2:
+  scan_tiers: [0, 1]     # UNTRUSTED and DERIVED only (design §8.3, the cost lever)
+  strength: HIGH

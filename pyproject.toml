@@ -1,0 +1,47 @@
+[project]
+name = "engram"
+version = "0.1.0"
+description = "A governance layer for agentic memory: tenant isolation, per-category retention, provenance-based trust, and layered poisoning defense for AI agent memory stores."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Vivek Raja P S", email = "vivekrajaps.offl@gmail.com" }]
+keywords = ["agentic-ai", "ai-security", "memory-poisoning", "owasp-asi06",
+            "governance", "gdpr", "bedrock-agentcore", "provenance", "llm-agents"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Security",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+]
+dependencies = ["pyyaml>=6", "jsonschema>=4"]
+
+[project.optional-dependencies]
+agentcore = ["boto3>=1.34"]        # Amazon Bedrock AgentCore adapter + Guardrails L2
+redis = ["redis>=5"]               # Redis backend adapter
+pgvector = ["psycopg[binary]>=3", "pgvector>=0.2"]  # Postgres/pgvector adapter
+aws = ["boto3>=1.34"]              # DynamoDB sidecar + S3 anchoring (self-host)
+dev = ["pytest>=8", "boto3>=1.34"]
+all = ["boto3>=1.34", "redis>=5", "psycopg[binary]>=3", "pgvector>=0.2"]
+
+# TODO(naming): the PyPI name "engram" is already taken. Before first publish,
+# pick an available distribution name (e.g. "engram-ai" or "engramctl") and a
+# matching GitHub handle/domain. See docs/PRODUCT_DELIVERY.md "Naming & domains".
+[project.urls]
+Source = "https://github.com/OWNER/engram"        # replace OWNER with your GitHub handle/org
+
+[project.scripts]
+engram-verify = "engram.verify_cli:main"
+
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["engram", "engram.detect", "engram.backends", "engram.sidecar",
+            "engram.l2", "memctl", "memctl.detect"]
+
+[tool.setuptools.package-data]
+engram = ["py.typed"]
