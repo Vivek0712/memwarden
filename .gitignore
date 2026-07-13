@@ -6,3 +6,15 @@ __pycache__/
 dist/
 build/
 docs/results/*.json
+
+# Never commit internal docs to the public SDK (paper / GTM / strategy / experiments narrative)
+*.tex
+*.pdf
+gtm/
+**/PITCH*
+**/*positioning*
+**/PAPER_CHANGELOG*
+**/IMPLEMENTATION_*
+**/EXPERIMENTS.md
+**/*technical-design*
+eval/paper_experiments*.py

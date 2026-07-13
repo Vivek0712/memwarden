@@ -32,6 +32,7 @@ Source = "https://github.com/OWNER/memwarden"        # replace OWNER with your G
 
 [project.scripts]
 memwarden-verify = "memwarden.verify_cli:main"
+memwarden-lab = "memwarden.lab:main"
 
 [build-system]
 requires = ["setuptools>=64"]

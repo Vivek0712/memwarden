@@ -20,3 +20,6 @@ The format follows [Keep a Changelog](https://keepachangelog.com/).
 - L2 scanner handler and Bedrock Guardrails client for self-hosted out-of-band scan.
 - Failure-mode, conformance, detection, held-out-gate, and cache test suites;
   benchmark harness; the paper's held-out adversarial evaluation.
+- `memwarden-lab`: a randomized scenario runner (simple → complex) that exercises
+  the full governance flow and prints a metrics report card, with opt-in,
+  content-free telemetry.
