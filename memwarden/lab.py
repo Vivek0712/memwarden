@@ -36,8 +36,11 @@ from .l2.scanner import RecordEvent, handle_record_event
 from .metrics import registry
 from .policy import Policy
 
+DASHBOARD_URL = os.environ.get(
+    "MEMWARDEN_DASHBOARD_URL",
+    "https://509yzxc2w9.execute-api.us-east-1.amazonaws.com")
 DEFAULT_TELEMETRY_URL = os.environ.get(
-    "MEMWARDEN_TELEMETRY_URL", "https://telemetry.memwarden.ai/v1/runs")
+    "MEMWARDEN_TELEMETRY_URL", DASHBOARD_URL.rstrip("/") + "/v1/runs")
 
 # --------------------------------------------------------------------------- policy
 POLICY_DOC = {
@@ -374,7 +377,8 @@ def format_report(cfg, m, run_id):
         f"adversarial records reached agent context "
         f"({'PASS — zero admitted' if ok else 'FAIL'})",
         line,
-        "  ⭐ Star + share your report: https://github.com/Vivek0712/memwarden",
+        f"  📊 Live leaderboard: {DASHBOARD_URL}",
+        "  ⭐ Star + share: https://github.com/Vivek0712/memwarden",
         line,
     ]
     return "\n".join(L)
