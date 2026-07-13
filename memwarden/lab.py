@@ -374,7 +374,7 @@ def format_report(cfg, m, run_id):
         f"adversarial records reached agent context "
         f"({'PASS — zero admitted' if ok else 'FAIL'})",
         line,
-        "  ⭐ Star + share your report: https://github.com/OWNER/memwarden",
+        "  ⭐ Star + share your report: https://github.com/Vivek0712/memwarden",
         line,
     ]
     return "\n".join(L)
