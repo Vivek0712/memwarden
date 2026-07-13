@@ -33,6 +33,9 @@ That's the whole integration. Every call your agent already makes keeps its shap
 pip install memwarden
 ```
 
+> **Beta:** the PyPI release is landing shortly. Until then, install from source:
+> `pip install git+https://github.com/Vivek0712/memwarden.git`
+
 ```python
 from memwarden import GovernedMemory, Policy, WriteRejected
 from memwarden.backends.inmemory import InMemoryBackend
