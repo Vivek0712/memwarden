@@ -86,7 +86,15 @@ memwarden-lab --scenario complex --seed 7
 ════════════════════════════════════════════════════════════
 ```
 
-The Lab is **fully local** (no cloud, no keys) and telemetry is **opt-in and content-free** — it only ever shares aggregate counts and timings, never your data. Run `memwarden-lab --no-share` to keep everything on your machine, or `--share` to help us improve. Full metrics are written to a JSON report you can keep or send us.
+Put your runs on the **live metrics board** — grouped by tester, drill down to each session's per-attack rundown:
+
+```bash
+memwarden-lab --as yourname --share
+```
+
+📊 **Board:** https://509yzxc2w9.execute-api.us-east-1.amazonaws.com
+
+The Lab is **fully local** (no cloud, no keys). Telemetry is **opt-in and content-free** — it shares only aggregate counts and timings (never your data; the server rejects anything that looks like content). Run `memwarden-lab --no-share` to keep everything on your machine. Full metrics are always written to a local JSON report too.
 
 ## Why it matters
 
