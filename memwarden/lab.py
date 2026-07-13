@@ -38,7 +38,7 @@ from .policy import Policy
 
 DASHBOARD_URL = os.environ.get(
     "MEMWARDEN_DASHBOARD_URL",
-    "https://509yzxc2w9.execute-api.us-east-1.amazonaws.com")
+    "https://lab.memwarden.com")
 DEFAULT_TELEMETRY_URL = os.environ.get(
     "MEMWARDEN_TELEMETRY_URL", DASHBOARD_URL.rstrip("/") + "/v1/runs")
 

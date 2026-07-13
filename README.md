@@ -92,7 +92,7 @@ Put your runs on the **live metrics board** — grouped by tester, drill down to
 memwarden-lab --as yourname --share
 ```
 
-📊 **Board:** https://509yzxc2w9.execute-api.us-east-1.amazonaws.com
+📊 **Board:** https://lab.memwarden.com
 
 The Lab is **fully local** (no cloud, no keys). Telemetry is **opt-in and content-free** — it shares only aggregate counts and timings (never your data; the server rejects anything that looks like content). Run `memwarden-lab --no-share` to keep everything on your machine. Full metrics are always written to a local JSON report too.
 
